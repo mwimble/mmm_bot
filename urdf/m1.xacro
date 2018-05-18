@@ -46,6 +46,17 @@
     <axis xyz="0 0 1" />
   </joint>
  
+  <transmission name="left_wheel">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_lwheel">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
   <link name="rwheel">
     <visual>
       <geometry>
@@ -62,6 +73,17 @@
     <origin xyz="${wheel_forward_of_center_distance} -${(body_width/2)+wheel_spacer+wheel_width} ${wheel_radius}" rpy="-1.5708 0 0"/>
     <axis xyz="0 0 1" />
   </joint>
+  
+  <transmission name="right_wheel">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_rwheel">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_motor">
+      <hardwareInterface>VelocityJointInterface</hardwareInterface>
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
   
   <link name="fwheel_attach">
     <visual>
@@ -90,7 +112,7 @@
       <material name="wheel" />
     </visual>
   </link>
-  
+
   <joint name="base_to_fwheel" type="continuous">
     <parent link="base_link"/>
     <child link="fwheel"/>
