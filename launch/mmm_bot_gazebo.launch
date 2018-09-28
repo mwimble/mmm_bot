@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="world_name" default="default" />
+  <arg name="gui" default="true" />
+  <arg name="run_camera" default="false"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find m1)/worlds/$(arg world_name).world"/>
+    <arg name="gui" value="$(arg gui)"/>
+  </include>
+
+  <!-- urdf xml robot description loaded on the Parameter Server, converting the xacro into a proper urdf file-->
+  <param name="robot_description" command="$(find xacro)/xacro '$(find m1)/urdf/m1.xacro'" />
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="m1_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model m1 -z 0.05" />
+
+  <!-- ros_control m1 launch file -->
+  <include file="$(find m1)/launch/m1a.launch" ns="/"/>
+
+</launch>
